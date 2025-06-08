@@ -45,6 +45,9 @@ const Board = ({ playerPositions, currentPlayer }) => {
 
   return (
     <div className="grid grid-cols-10 border-4 border-yellow-700 rounded-lg shadow-2xl bg-board overflow-hidden aspect-square max-w-xl w-full mx-auto">
+      
+      
+      
       {displayCells.flat().map((cellNumber) => {
         const playersOnCell = Object.entries(playerPositions)
           .filter(([_, pos]) => pos === cellNumber)

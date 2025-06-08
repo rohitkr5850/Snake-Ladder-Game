@@ -74,13 +74,14 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-6 md:space-y-8">
-      <header>
-        <h1 className="text-5xl md:text-7xl font-display text-yellow-400 tracking-wider"
-          style={{ textShadow: '2px 2px #000, 4px 4px #E53E3E' }}
-        >
-          Snake & Ladder
-        </h1>
-      </header>
+    <header className="px-4 py-6 sm:py-8 md:py-10 text-center">
+  <h1
+    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display text-yellow-400 tracking-wider"
+    style={{ textShadow: '2px 2px #000, 4px 4px #E53E3E' }}
+  >
+    Snake & Ladder
+  </h1>
+</header>
 
       <main className="flex flex-col lg:flex-row items-center lg:items-start gap-6 md:gap-8 w-full max-w-6xl">
         <div className="w-full lg:w-3/5 order-2 lg:order-1">
