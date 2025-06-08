@@ -19,7 +19,7 @@ function App() {
 
     setIsRolling(true);
     const roll = Math.floor(Math.random() * 6) + 1;
-    
+
     // The Dice component handles its own animation based on `isRolling` and `diceValue`
     // We update `diceValue` here, and Dice component will pick it up after its animation cycle.
     // The game logic proceeds after a delay matching the animation.
@@ -32,22 +32,28 @@ function App() {
       let newPosition = currentPosition + roll;
       let turnMessage = `Player ${currentPlayer} rolled a ${roll}. `;
 
+      // First check if the move is valid (not overshooting)
       if (newPosition > BOARD_SIZE) {
-        newPosition = currentPosition; 
+        newPosition = currentPosition;
         turnMessage += `Overshot! Staying at ${currentPosition}.`;
       } else {
         turnMessage += `Moved from ${currentPosition} to ${newPosition}.`;
+
+        // Then check for ladders (ladders should be checked before snakes)
+        if (LADDERS[newPosition]) {
+          let oldPosition = newPosition;
+          newPosition = LADDERS[newPosition];
+          turnMessage += ` Yay! Climbed a ladder from ${oldPosition} up to ${newPosition}.`;
+        }
+
+        // Finally check for snakes
+        if (SNAKES[newPosition]) {
+          let oldPosition = newPosition;
+          newPosition = SNAKES[newPosition];
+          turnMessage += ` Oh no! Bitten by a snake at ${oldPosition}, down to ${newPosition}.`;
+        }
       }
-      
-      let intermediatePosition = newPosition; // Store position before snake/ladder
-      if (SNAKES[intermediatePosition]) {
-        newPosition = SNAKES[intermediatePosition];
-        turnMessage += ` Oh no! Bitten by a snake at ${intermediatePosition}, down to ${newPosition}.`;
-      } else if (LADDERS[intermediatePosition]) {
-        newPosition = LADDERS[intermediatePosition];
-        turnMessage += ` Yay! Climbed a ladder from ${intermediatePosition}, up to ${newPosition}.`;
-      }
-      
+
       setPlayerPositions(prev => ({ ...prev, [currentPlayer]: newPosition }));
       setMessage(turnMessage);
 
@@ -74,14 +80,14 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-6 md:space-y-8">
-    <header className="px-4 py-6 sm:py-8 md:py-10 text-center">
-  <h1
-    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display text-yellow-400 tracking-wider"
-    style={{ textShadow: '2px 2px #000, 4px 4px #E53E3E' }}
-  >
-    Snake & Ladder
-  </h1>
-</header>
+      <header className="px-4 py-6 sm:py-8 md:py-10 text-center">
+        <h1
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display text-yellow-400 tracking-wider"
+          style={{ textShadow: '2px 2px #000, 4px 4px #E53E3E' }}
+        >
+          Snake & Ladder
+        </h1>
+      </header>
 
       <main className="flex flex-col lg:flex-row items-center lg:items-start gap-6 md:gap-8 w-full max-w-6xl">
         <div className="w-full lg:w-3/5 order-2 lg:order-1">
@@ -98,7 +104,7 @@ function App() {
           <Dice onRoll={handleRollDice} diceValue={diceValue} rolling={isRolling} />
         </div>
       </main>
-      
+
       <footer className="text-center text-gray-500 text-sm mt-auto pt-4">
         <p>Built with React, Vite & Tailwind CSS. Enjoy!</p>
       </footer>
