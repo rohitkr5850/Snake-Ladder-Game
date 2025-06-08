@@ -25,11 +25,14 @@ export default {
         'player': '0 2px 4px rgba(0,0,0,0.2)',
       },
       keyframes: {
-        diceRoll: {
-          '0%, 100%': { transform: 'rotate(0deg) scale(1)' },
-          '25%': { transform: 'rotate(15deg) scale(1.1)' },
-          '50%': { transform: 'rotate(-15deg) scale(1.1)' },
-          '75%': { transform: 'rotate(5deg) scale(1.05)' },
+        'subtle-roll': {
+          '0%, 100%': { transform: 'rotate(0deg) translateY(0)' },
+          '25%': { transform: 'rotate(2deg) translateY(-2px)' },
+          '75%': { transform: 'rotate(-2deg) translateY(2px)' },
+        },
+        'rotate-y': {
+          '0%': { transform: 'rotateY(0deg)' },
+          '100%': { transform: 'rotateY(180deg)' },
         },
         playerMove: {
           '0%': { transform: 'scale(1)', opacity: 0.8 },
@@ -39,12 +42,18 @@ export default {
         winEffect: {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.1)' },
-        }
+        },
+        'subtle-roll': {
+          '0%, 100%': { transform: 'rotate(0deg) translateY(0)' },
+          '25%': { transform: 'rotate(2deg) translateY(-2px)' },
+          '75%': { transform: 'rotate(-2deg) translateY(2px)' },
+        },
       },
       animation: {
         diceRoll: 'diceRoll 0.5s ease-in-out',
         playerMove: 'playerMove 0.6s ease-in-out',
-        winEffect: 'winEffect 1s ease-in-out infinite'
+        winEffect: 'winEffect 1s ease-in-out infinite',
+        'subtle-roll': 'subtle-roll 0.3s ease-in-out infinite',
       }
     },
   },
